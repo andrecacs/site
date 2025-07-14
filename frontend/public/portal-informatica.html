@@ -874,7 +874,7 @@
         }, observerOptions);
 
         // Observe all service cards and other elements
-        document.querySelectorAll('.service-card, .about-content, .contact-content, .testimonial-card').forEach(el => {
+        document.querySelectorAll('.service-card, .about-content, .contact-content, .testimonial-card, .faq-item').forEach(el => {
             observer.observe(el);
         });
 
@@ -885,6 +885,31 @@
             });
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // FAQ functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const answer = button.nextElementSibling;
+                const isOpen = answer.style.maxHeight !== '0px' && answer.style.maxHeight !== '';
+                
+                // Close all other FAQ items
+                document.querySelectorAll('.faq-answer').forEach(item => {
+                    item.style.maxHeight = '0px';
+                });
+                document.querySelectorAll('.faq-question').forEach(item => {
+                    item.style.background = '#f8f9fa';
+                });
+                
+                if (!isOpen) {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    button.style.background = '#667eea';
+                    button.style.color = 'white';
+                } else {
+                    button.style.background = '#f8f9fa';
+                    button.style.color = 'black';
+                }
             });
         });
 
