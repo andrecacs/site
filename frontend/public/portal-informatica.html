@@ -795,6 +795,26 @@
             }
         });
 
+        // Add select styling (since we added a select element)
+        const style = document.createElement('style');
+        style.textContent = `
+            select {
+                width: 100%;
+                padding: 12px;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                font-size: 1rem;
+                background: white;
+                cursor: pointer;
+                transition: border-color 0.3s ease;
+            }
+            select:focus {
+                outline: none;
+                border-color: #667eea;
+            }
+        `;
+        document.head.appendChild(style);
+
         // Add floating action button for WhatsApp
         const floatingBtn = document.createElement('div');
         floatingBtn.innerHTML = `
