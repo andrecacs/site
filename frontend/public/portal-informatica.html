@@ -795,25 +795,43 @@
             }
         });
 
-        // Add select styling (since we added a select element)
-        const style = document.createElement('style');
-        style.textContent = `
-            select {
-                width: 100%;
-                padding: 12px;
-                border: 2px solid #ddd;
-                border-radius: 8px;
-                font-size: 1rem;
-                background: white;
-                cursor: pointer;
-                transition: border-color 0.3s ease;
-            }
-            select:focus {
-                outline: none;
-                border-color: #667eea;
+        // Add floating action button for WhatsApp
+        const floatingBtn = document.createElement('div');
+        floatingBtn.innerHTML = `
+            <a href="https://wa.me/5511999999999" target="_blank" style="
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #25D366;
+                color: white;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 24px;
+                text-decoration: none;
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+                z-index: 1000;
+                transition: all 0.3s ease;
+                animation: pulse 2s infinite;
+            " onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+                💬
+            </a>
+        `;
+        document.body.appendChild(floatingBtn);
+
+        // Add pulse animation for WhatsApp button
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+                50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.8); }
+                100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
             }
         `;
-        document.head.appendChild(style);
+        document.head.appendChild(pulseStyle);
     </script>
 </body>
 </html>
