@@ -887,26 +887,84 @@
         contactForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Simulate form submission
-            const formData = new FormData(contactForm);
-            const formObject = {};
+            // Show loading state
+            const submitBtn = contactForm.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
             
-            formData.forEach((value, key) => {
-                formObject[key] = value;
-            });
-            
-            // In a real application, you would send this data to a server
-            console.log('Form submitted:', formObject);
-            
-            // Show success message
-            successMessage.style.display = 'block';
-            contactForm.reset();
-            
-            // Hide success message after 5 seconds
+            // Simulate form submission delay
             setTimeout(() => {
-                successMessage.style.display = 'none';
-            }, 5000);
+                // Get form data
+                const formData = new FormData(contactForm);
+                const formObject = {};
+                
+                formData.forEach((value, key) => {
+                    formObject[key] = value;
+                });
+                
+                // In a real application, you would send this data to a server
+                console.log('Form submitted:', formObject);
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                contactForm.reset();
+                
+                // Reset button
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+                
+                // Show notification
+                showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+            }, 1500);
         });
+
+        // Notification system
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                z-index: 10000;
+                max-width: 300px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 4000);
+        }
+
+        // Add notification animations
+        const notificationStyle = document.createElement('style');
+        notificationStyle.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(notificationStyle);
 
         // Add animations on scroll
         const observerOptions = {
