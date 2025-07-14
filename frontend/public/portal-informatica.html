@@ -823,8 +823,18 @@
         }, observerOptions);
 
         // Observe all service cards and other elements
-        document.querySelectorAll('.service-card, .about-content, .contact-content').forEach(el => {
+        document.querySelectorAll('.service-card, .about-content, .contact-content, .testimonial-card').forEach(el => {
             observer.observe(el);
+        });
+
+        // Add hover effects for testimonial cards
+        document.querySelectorAll('.testimonial-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
         });
 
         // Header background change on scroll
